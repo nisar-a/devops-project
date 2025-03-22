@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        IMAGE_NAME = "nadinc/docker_pipe"          // Replace with your Docker Hub username and image name
+        IMAGE_NAME = "22itr073/devops_projects"          // Replace with your Docker Hub username and image name
         TAG = "latest"
         CONTAINER_NAME = "my-container"
         PORT = "3001"
@@ -13,7 +13,7 @@ pipeline {
         stage('Clone Repository') {
             steps {
                 echo "Cloning GitHub repository..."
-                git branch:'main', url:'https://github.com/nadin-c/Devops.git'  // Replace with your repo URL
+                git branch:'main', url:'https://github.com/nisar-a/devops-project.git'  // Replace with your repo URL
             }
         }
 
