@@ -1,0 +1,124 @@
+* { 
+    box-sizing: border-box; 
+    margin: 0; 
+    padding: 0; 
+}
+
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+body { 
+    font-family: 'Poppins', sans-serif; 
+    background: linear-gradient(145deg, #74ebd5, #ACB6E5, #FFB822, #E91E63);
+    background-size: 400% 400%;
+    animation: gradientBG 10s ease infinite;
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    height: 100vh;
+    padding: 20px;
+}
+
+.container {
+    background-color: #ffffffcc;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    width: 320px;
+    text-align: center;
+    backdrop-filter: blur(10px);
+}
+
+h2 { 
+    margin-bottom: 20px; 
+    color: #333;
+    font-size: 1.8rem;
+    font-weight: 600;
+}
+
+input, select {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: 2px solid #ddd;
+    border-radius: 12px;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+input:focus, select:focus {
+    border-color: #4CAF50;
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 1.2rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #45a049;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+.result {
+    margin-top: 20px;
+    font-size: 1.4rem;
+    font-weight: bold;
+    padding: 10px;
+    border-radius: 12px;
+    background-color: #f9f9f9;
+}
+
+.normal { 
+    color: #4CAF50;
+    border: 2px solid #4CAF50;
+}
+
+.underweight { 
+    color: #FFB822;
+    border: 2px solid #FFB822;
+}
+
+.overweight { 
+    color: #FF5722;
+    border: 2px solid #FF5722;
+}
+
+.obese { 
+    color: #E91E63;
+    border: 2px solid #E91E63;
+}
+
+.btn-container {
+    display: flex;
+    gap: 10px;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.instructions {
+    margin-top: 20px;
+    font-size: 1rem;
+    color: #555;
+    padding: 10px;
+    border-radius: 12px;
+    background-color: #ffffffcc;
+    line-height: 1.6;
+}
+
+.normal .instructions { content: 'Maintain a balanced diet and regular exercise to keep up your good health.'; }
+.underweight .instructions { content: 'Consider a nutrient-rich diet with healthy fats and proteins. Consult a dietitian if needed.'; }
+.overweight .instructions { content: 'Focus on portion control and regular physical activity. Avoid sugary drinks and processed foods.'; }
+.obese .instructions { content: 'Consult a healthcare provider for a personalized weight management plan. Prioritize a heart-healthy diet and regular exercise.'; }
