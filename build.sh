@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Variables
-IMAGE_NAME="nadinc/docker_pipe"
+IMAGE_NAME="22itr073/devops_projects"
 TAG="latest"
 
 # Build Docker image
