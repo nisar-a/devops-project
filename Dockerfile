@@ -1,12 +1,11 @@
-# Base image
-FROM nginx:latest
+# Use a lightweight web server
+FROM nginx:alpine
 
-# Copy the HTML file to NGINX default location
-COPY index.html /usr/share/nginx/html/index.html
+# Copy HTML files to the web server
+COPY . /usr/share/nginx/html
 
-# Expose port 80
+# Expose port 80 (Default for Nginx)
 EXPOSE 80
 
-# Start NGINX
+# Start the Nginx server
 CMD ["nginx", "-g", "daemon off;"]
-
