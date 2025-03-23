@@ -1,62 +1,53 @@
 pipeline {
+
     agent any
 
-    environment {
-        IMAGE_NAME = "22itr073/devops_projects"          // Replace with your Docker Hub username and image name
-        TAG = "latest"
-        CONTAINER_NAME = "my-container"
-        PORT = "3001"
-    }
-
     stages {
-        
-        stage('Clone Repository') {
-            steps {
-                echo "Cloning GitHub repository..."
-                git branch:'main', url:'https://github.com/nisar-a/devops-project.git'  // Replace with your repo URL
-            }
-        }
 
-        stage('Build Docker Image') {
+        stage('Clean Workspace') {
             steps {
-                echo "Building Docker image..."
-                sh 'chmod +x build.sh'
-                sh './build.sh'
-            }
-        }
-
-        stage('Login to Docker Hub') {
-            steps {
-                echo "Logging into Docker Hub..."
-                withCredentials([usernamePassword(credentialsId: 'docker-hub-creds', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
-                    sh 'docker login -u $DOCKER_USER -p $DOCKER_PASS'
+                script {
+                    echo "Cleaning workspace..."
+                    deleteDir() // Deletes everything in the Jenkins workspace before starting
                 }
             }
         }
 
-        stage('Push Docker Image') {
+        stage('Git Checkout') {
             steps {
-                echo "Pushing Docker image to Docker Hub..."
-                sh "docker tag $IMAGE_NAME:$TAG $IMAGE_NAME:$TAG"
-                sh "docker push $IMAGE_NAME:$TAG"
+                script {
+                    git branch: 'main',
+                        credentialsId: 'github_secret',
+                        url: 'https://github.com/nisar-a/devops-project.git'
+                }
+            }
+        }
+
+        stage('Docker Build & Push') {
+            steps {
+                script {
+                    withDockerRegistry(credentialsId: 'docker-hub-creds', toolName: 'docker') {
+                        def imageName = "22itr073/devops_projects"
+                        def tag = "project"
+
+                        sh "docker build -t ${imageName}:${tag} ."
+                        sh "docker push ${imageName}:${tag}"
+                    }
+                }
             }
         }
 
         stage('Deploy Docker Container') {
             steps {
-                echo "Deploying Docker container..."
-                sh 'chmod +x deploy.sh'
-                sh './deploy.sh'
-            }
-        }
-    }
+                script {
+                    // Stop and remove the existing container if it's running
+                    sh "docker stop jusjes_container || true"
+                    sh "docker rm jusjes_container || true"
 
-    post {
-        success {
-            echo "Deployment Successful!"
-        }
-        failure {
-            echo "Deployment Failed!"
+                    // Run the new container
+                    sh "docker run -d --name jusjes_container -p 3002:80 22itr073/devops_projects:project"
+                }
+            }
         }
     }
 }
